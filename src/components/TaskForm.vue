@@ -1,21 +1,13 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref } from "vue";
+import TaskTimer from "./TaskTimer.vue";
 
-const timeInSecods = ref<number>(0);
-let timer = 0;
+const description = ref<string>("");
 
-const elapsedTime = computed<string>(() => {
-  return new Date(timeInSecods.value * 1000).toISOString().substring(11, 19);
-});
-
-function startCount() {
-  timer = setInterval(() => {
-    timeInSecods.value++;
-  }, 1000);
-}
-
-function stopCount() {
-  clearInterval(timer);
+function endTask(elapsedTime: number): void {
+  console.log(elapsedTime);
+  console.log(description.value);
+  description.value = "";
 }
 </script>
 
@@ -27,28 +19,11 @@ function stopCount() {
           type="text"
           class="input"
           placeholder="Which task do you want to start?"
+          v-model="description"
         />
       </div>
       <div class="column">
-        <div
-          class="is-flex is-align-items-center is-justify-content-space-between"
-        >
-          <section>
-            <strong>{{ elapsedTime }}</strong>
-          </section>
-          <button class="button" @click="startCount">
-            <span class="icon">
-              <i class="fas fa-play"></i>
-            </span>
-            <span>play</span>
-          </button>
-          <button class="button" @click="stopCount">
-            <span class="icon">
-              <i class="fas fa-stop"></i>
-            </span>
-            <span>stop</span>
-          </button>
-        </div>
+        <TaskTimer @on-stop-timer="endTask" />
       </div>
     </div>
   </div>
