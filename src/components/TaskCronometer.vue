@@ -15,6 +15,12 @@ const elapsedTime = computed<string>(() => {
 
 <template>
   <section>
-    <strong>{{ elapsedTime }}</strong>
+    <strong class="display">{{ elapsedTime }}</strong>
   </section>
 </template>
+
+<style scoped>
+.display {
+  color: var(--text-primary);
+}
+</style>
