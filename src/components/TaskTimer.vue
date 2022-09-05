@@ -7,19 +7,19 @@ const timerRunning = ref<boolean>(false);
 const emits = defineEmits(["onStopTimer"]);
 let timer = 0;
 
-function startTimer() {
+const startTimer = (): void => {
   timerRunning.value = true;
   timer = setInterval(() => {
     timeInSecods.value++;
   }, 1000);
-}
+};
 
-function stopTimer() {
+const stopTimer = (): void => {
   timerRunning.value = false;
   clearInterval(timer);
   emits("onStopTimer", timeInSecods.value);
   timeInSecods.value = 0;
-}
+};
 </script>
 
 <template>
