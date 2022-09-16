@@ -2,17 +2,36 @@ import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 import TasksView from "@/views/TasksView.vue";
 import ProjectsView from "@/views/ProjectsView.vue";
+import FormView from "@/views/Projects/FormView.vue";
+import ListView from "@/views/Projects/ListView.vue";
 
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    name: "tasks",
+    name: "Tasks",
     component: TasksView,
   },
   {
     path: "/projects",
-    name: "projects",
     component: ProjectsView,
+    children: [
+      {
+        path: "",
+        name: "Projects",
+        component: ListView,
+      },
+      {
+        path: "new",
+        name: "New Project",
+        component: FormView,
+      },
+      {
+        path: ":id",
+        name: "Edit Project",
+        component: FormView,
+        props: true,
+      },
+    ],
   },
 ];
 

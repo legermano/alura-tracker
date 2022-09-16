@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { key } from "@/store";
+import { useStore } from "@/store";
 import { ref, computed } from "vue";
-import { useStore } from "vuex";
 import TaskTimer from "./TaskTimer.vue";
 
-const store = useStore(key);
+const store = useStore();
 const projects = computed(() => store.state.projects);
 const projectId = ref<string>("");
 const description = ref<string>("");
