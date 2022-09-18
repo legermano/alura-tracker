@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { NotificationType } from "@/interfaces/INotifications";
 import { useStore } from "@/store";
 import { ref, computed } from "vue";
 import TaskTimer from "./TaskTimer.vue";
+import useNotificator from "@/hooks/notificator";
 
+const { notificate } = useNotificator();
 const store = useStore();
 const projects = computed(() => store.state.projects);
 const projectId = ref<string>("");
@@ -11,10 +14,22 @@ const description = ref<string>("");
 const emit = defineEmits(["onTaskSave"]);
 
 const endTask = (elapsedTime: number): void => {
+  const project = projects.value.find((p) => p.id == projectId.value);
+
+  if (!project) {
+    notificate(
+      NotificationType.DANGER,
+      "Oopsie!",
+      "Select a project before end the task"
+    );
+
+    return;
+  }
+
   emit("onTaskSave", {
     timeInSeconds: elapsedTime,
     description: description.value,
-    project: projects.value.find((p) => p.id == projectId.value),
+    project,
   });
   description.value = "";
 };

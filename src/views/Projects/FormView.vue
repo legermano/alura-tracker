@@ -4,10 +4,13 @@ import { useStore } from "@/store";
 import { useRouter } from "vue-router";
 import type IProject from "@/interfaces/IProject";
 import { UPDATE_PROJECT, ADD_PROJECT } from "@/store/mutation-types";
+import { NotificationType } from "@/interfaces/INotifications";
+import useNotificator from "@/hooks/notificator";
 
 const store = useStore();
 const projectName = ref("");
 const router = useRouter();
+const { notificate } = useNotificator();
 
 const prop = defineProps({
   id: {
@@ -32,6 +35,11 @@ const onSave = () => {
     store.commit(ADD_PROJECT, projectName.value);
   }
   projectName.value = "";
+  notificate(
+    NotificationType.SUCCESS,
+    "Excellent!",
+    "Project successfully created"
+  );
   router.push("/projects");
 };
 </script>

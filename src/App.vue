@@ -3,6 +3,7 @@
 import { ref } from "vue";
 // Components imports
 import SideBar from "@/components/SideBar.vue";
+import NotificationCard from "./components/NotificationCard.vue";
 
 const darkMode = ref<boolean>(false);
 const changeMode = (enableDarkMode: boolean) =>
@@ -18,6 +19,7 @@ const changeMode = (enableDarkMode: boolean) =>
       <SideBar @on-change-mode="changeMode" />
     </div>
     <div class="column is-three-quarter content">
+      <NotificationCard />
       <RouterView />
     </div>
   </main>
